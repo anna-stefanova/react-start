@@ -1,7 +1,9 @@
 import './Button.css';
-function Button() {
+import {useState} from 'react';
+function Button({textBtn}) {
+
     return (
-        <button className='button accent'>Сохранить</button>
+        <button className='button accent'>{textBtn}</button>
     );
 }
 
