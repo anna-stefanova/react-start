@@ -1,9 +1,9 @@
-import './Button.css';
-import {useState} from 'react';
+import styles from './Button.module.css';
+
 function Button({textBtn}) {
 
     return (
-        <button className='button accent'>{textBtn}</button>
+        <button className={`${styles.button} ${styles.accent}`}>{textBtn}</button>
     );
 }
 

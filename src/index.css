@@ -14,5 +14,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
-body {
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+input[type="text"] {
+  margin: 0;
 }
