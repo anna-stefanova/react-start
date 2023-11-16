@@ -3,6 +3,7 @@ import Button from '../Button/Button.jsx';
 import {useEffect, useReducer, useRef, useState} from 'react';
 import cn from 'classnames';
 import {INITIAL_STATE, reducerForm} from './JournalForm.js';
+import Input from '../Input/Input.jsx';
 
 
 
@@ -59,25 +60,21 @@ function JournalForm({onSubmit}) {
 
         <form className={styles['journal-form']} onSubmit={addJournalItem}>
             <div>
-                <input type="text" ref={titleRef} name="title" placeholder="Заголовок поста" value={values.title} onChange={onChange} className={cn(styles.input, styles['input-title'], {
-                    [styles.invalid]: !isValid.title
-                })}/>
+                <Input type="text" ref={titleRef} name="title" placeholder="Заголовок поста" value={values.title} onChange={onChange} isValid={isValid.title} appearance='title'/>
             </div>
             <div className={styles['form-row']}>
                 <label className={styles['form-label']} htmlFor="date">
                     <img src="/calendar.svg" alt="Иконка календаря"/>
                     <span>Дата</span>
                 </label>
-                <input type="date" ref={dateRef} name="date" id="date" value={values.date} onChange={onChange} className={cn(styles.input, {
-                    [styles.invalid]: !isValid.date
-                })}/>
+                <Input type="date" ref={dateRef} name="date" id="date" value={values.date} onChange={onChange} isValid={isValid.date}/>
             </div>
             <div className={styles['form-row']}>
                 <label className={cn(styles['form-label'], styles['label-tag'])} htmlFor="tag">
                     <img src="/folder.svg" alt="Иконка меток"/>
                     <span>Метки</span>
                 </label>
-                <input type="text" name="tag" id="tag" value={values.tag} onChange={onChange} className={styles.input}/>
+                <Input type="text" name="tag" id="tag" value={values.tag} onChange={onChange} />
             </div>
             <textarea name="post" ref={postRef} id="" cols="30" rows="10" value={values.post} onChange={onChange} className={cn(styles.input, {
                 [styles.invalid]: !isValid.post
