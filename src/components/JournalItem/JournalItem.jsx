@@ -2,6 +2,7 @@ import './JournalItem.css';
 
 function JournalItem({id, title, date, post}) {
 
+
     const formatDate = new Intl.DateTimeFormat('ru-Ru').format(date);
 
     return (
