@@ -1,35 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import Sidebar from './layouts/Sidebar/Sidebar.jsx';
+import Body from './layouts/Body/Body.jsx';
+import JournalAddButton from './components/JournalAddButton/JournalAddButton.jsx';
+import Header from './components/Header/Header.jsx';
+import JournalList from './components/JournalList/JournalList.jsx';
+import JournalForm from './components/JournalForm/JournalForm.jsx';
 
-function App() {
-  const [count, setCount] = useState(0)
+import {useLocalstorage} from './hooks/use-localstorage.hook.js';
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+function mapItems(items) {
+    if (!items) return [];
+    return items.map(i => ({
+        ...i,
+        date: new Date(i.date)
+    }));
 }
 
-export default App
+function App() {
+  // const [items, setData] = useState([]);
+
+  //   useEffect(() => {
+  //       const data = JSON.parse(localStorage.getItem('data'));
+  //       if (data) {
+  //           setData(data.map(item => ({
+  //               ...item,
+  //               date: new Date(item.date)
+  //           })));
+  //       }
+  //   }, []);
+  //
+  //   useEffect(() => {
+  //       if (items.length) {
+  //           localStorage.setItem('data', JSON.stringify(items));
+  //       }
+  //   }, [items]);
+
+    const [items, setItems] = useLocalstorage('data');
+
+    const addItem = (item) => {
+        setItems([...items, {
+            title: item.title,
+            post: item.post,
+            date: new Date(item.date),
+            id: items.length ? Math.max(...items.map(i => i.id)) + 1 : 1
+        }]);
+    };
+
+    return (
+      <div className="app">
+          <Sidebar>
+              <Header/>
+              <JournalAddButton/>
+              <JournalList items={mapItems(items)}/>
+          </Sidebar>
+          <Body>
+              <JournalForm onSubmit={addItem}/>
+          </Body>
+      </div>
+  );
+}
+
+export default App;
